@@ -1,4 +1,4 @@
-const { addition, subtraction, multiplication, division, calculate } = require("../calculator");
+const { addition, subtraction, multiplication, division, modulo, power, squareRoot, calculate } = require("../calculator");
 
 describe("addition", () => {
   it("should add two positive numbers", () => {
@@ -92,6 +92,72 @@ describe("division", () => {
   });
 });
 
+describe("modulo", () => {
+  it("should return remainder of two positive numbers", () => {
+    expect(modulo(10, 3)).toBe(1);
+  });
+
+  it("should return remainder with negative dividend", () => {
+    expect(modulo(-10, 3)).toBe(-1);
+  });
+
+  it("should return zero when perfectly divisible", () => {
+    expect(modulo(10, 5)).toBe(0);
+  });
+
+  it("should handle division by zero", () => {
+    expect(() => modulo(5, 0)).toThrow("Division by zero is not allowed");
+  });
+
+  it("should handle decimal numbers", () => {
+    expect(modulo(10.5, 3)).toBeCloseTo(1.5);
+  });
+});
+
+describe("power", () => {
+  it("should raise base to exponent", () => {
+    expect(power(2, 3)).toBe(8);
+  });
+
+  it("should return 1 for exponent 0", () => {
+    expect(power(5, 0)).toBe(1);
+  });
+
+  it("should handle negative exponent", () => {
+    expect(power(2, -2)).toBe(0.25);
+  });
+
+  it("should handle base 0", () => {
+    expect(power(0, 5)).toBe(0);
+  });
+
+  it("should handle decimal exponent", () => {
+    expect(power(9, 0.5)).toBe(3);
+  });
+});
+
+describe("squareRoot", () => {
+  it("should return square root of a positive number", () => {
+    expect(squareRoot(9)).toBe(3);
+  });
+
+  it("should return square root of zero", () => {
+    expect(squareRoot(0)).toBe(0);
+  });
+
+  it("should handle decimal numbers", () => {
+    expect(squareRoot(2)).toBeCloseTo(1.414, 3);
+  });
+
+  it("should handle perfect squares", () => {
+    expect(squareRoot(16)).toBe(4);
+  });
+
+  it("should throw for negative numbers", () => {
+    expect(() => squareRoot(-1)).toThrow("Cannot calculate square root of a negative number");
+  });
+});
+
 describe("calculate", () => {
   it("should perform addition", () => {
     expect(calculate("addition", 2, 3)).toBe(5);
@@ -109,7 +175,19 @@ describe("calculate", () => {
     expect(calculate("division", 10, 2)).toBe(5);
   });
 
+  it("should perform modulo", () => {
+    expect(calculate("modulo", 10, 3)).toBe(1);
+  });
+
+  it("should perform power", () => {
+    expect(calculate("power", 2, 3)).toBe(8);
+  });
+
+  it("should perform squareRoot", () => {
+    expect(calculate("squareRoot", 9)).toBe(3);
+  });
+
   it("should throw for unknown operation", () => {
-    expect(() => calculate("power", 2, 3)).toThrow("Unknown operation: power");
+    expect(() => calculate("unknown", 2, 3)).toThrow("Unknown operation: unknown");
   });
 });

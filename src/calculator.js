@@ -19,6 +19,24 @@ function division(a, b) {
   return a / b;
 }
 
+function modulo(a, b) {
+  if (b === 0) {
+    throw new Error("Division by zero is not allowed");
+  }
+  return a % b;
+}
+
+function power(base, exponent) {
+  return Math.pow(base, exponent);
+}
+
+function squareRoot(n) {
+  if (n < 0) {
+    throw new Error("Cannot calculate square root of a negative number");
+  }
+  return Math.sqrt(n);
+}
+
 function calculate(operation, a, b) {
   switch (operation) {
     case "addition":
@@ -29,6 +47,12 @@ function calculate(operation, a, b) {
       return multiplication(a, b);
     case "division":
       return division(a, b);
+    case "modulo":
+      return modulo(a, b);
+    case "power":
+      return power(a, b);
+    case "squareRoot":
+      return squareRoot(a);
     default:
       throw new Error(`Unknown operation: ${operation}`);
   }
@@ -36,9 +60,13 @@ function calculate(operation, a, b) {
 
 if (require.main === module) {
   const args = process.argv.slice(2);
-  if (args.length !== 3) {
-    console.log("Usage: node src/calculator.js <operation> <a> <b>");
-    console.log("Operations: addition, subtraction, multiplication, division");
+  const ops2 = ["addition", "subtraction", "multiplication", "division", "modulo", "power"];
+  const ops1 = ["squareRoot"];
+
+  if (args.length < 2) {
+    console.log("Usage: node src/calculator.js <operation> <a> [b]");
+    console.log("Two-argument operations: addition, subtraction, multiplication, division, modulo, power");
+    console.log("One-argument operations: squareRoot");
     process.exit(1);
   }
 
@@ -46,8 +74,13 @@ if (require.main === module) {
   const numA = parseFloat(a);
   const numB = parseFloat(b);
 
-  if (isNaN(numA) || isNaN(numB)) {
-    console.error("Error: Both arguments must be valid numbers");
+  if (isNaN(numA)) {
+    console.error("Error: First argument must be a valid number");
+    process.exit(1);
+  }
+
+  if (ops2.includes(operation) && isNaN(numB)) {
+    console.error("Error: Second argument must be a valid number");
     process.exit(1);
   }
 
@@ -60,4 +93,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { addition, subtraction, multiplication, division, calculate };
+module.exports = { addition, subtraction, multiplication, division, modulo, power, squareRoot, calculate };
