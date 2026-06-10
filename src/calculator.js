@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-function add(a, b) {
+function addition(a, b) {
   return a + b;
 }
 
-function subtract(a, b) {
+function subtraction(a, b) {
   return a - b;
 }
 
-function multiply(a, b) {
+function multiplication(a, b) {
   return a * b;
 }
 
-function divide(a, b) {
+function division(a, b) {
   if (b === 0) {
     throw new Error("Division by zero is not allowed");
   }
@@ -21,14 +21,14 @@ function divide(a, b) {
 
 function calculate(operation, a, b) {
   switch (operation) {
-    case "add":
-      return add(a, b);
-    case "subtract":
-      return subtract(a, b);
-    case "multiply":
-      return multiply(a, b);
-    case "divide":
-      return divide(a, b);
+    case "addition":
+      return addition(a, b);
+    case "subtraction":
+      return subtraction(a, b);
+    case "multiplication":
+      return multiplication(a, b);
+    case "division":
+      return division(a, b);
     default:
       throw new Error(`Unknown operation: ${operation}`);
   }
@@ -38,7 +38,7 @@ if (require.main === module) {
   const args = process.argv.slice(2);
   if (args.length !== 3) {
     console.log("Usage: node src/calculator.js <operation> <a> <b>");
-    console.log("Operations: add, subtract, multiply, divide");
+    console.log("Operations: addition, subtraction, multiplication, division");
     process.exit(1);
   }
 
@@ -60,4 +60,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { add, subtract, multiply, divide, calculate };
+module.exports = { addition, subtraction, multiplication, division, calculate };
